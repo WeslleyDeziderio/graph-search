@@ -20,9 +20,9 @@ void DFS::incrementGlobalTimer() {
 }
 
 void DFS::recursiveDFS(Vertex currentVertex) {
-    const std::list<std::list<int>>& neighbors = dataDfs.getAdjacencyList();
     incrementGlobalTimer();
 
     this->graphVertex[currentVertex.getVertex()].setEntryDepth(getGlobalTimer());
+    std::vector<int> neighborhood(dataDfs.getNeighborhoodMatrix(currentVertex.getVertex()));
     
 }

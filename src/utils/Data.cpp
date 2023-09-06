@@ -98,3 +98,18 @@ bool Data::isAdjacency(int i, int j) const {
 
     return false;
 }
+
+std::list<int> Data::getNeighborhoodList(int vertex) {}
+
+std::vector<int> Data::getNeighborhoodMatrix(int vertex) {
+    std::vector<int> neighbors;
+
+    vertex -= 1;
+    for (int i = 0; i < this->numVertices; ++i) {
+        if (isAdjacency(vertex, i)) {
+            neighbors.push_back(i+1);
+        }
+    }
+
+    return neighbors;
+}
