@@ -25,3 +25,11 @@ void Vertex::setVertex(int vertex) {
 int Vertex::getVertex() {
     return vertex;
 }
+
+void Vertex::setAncestral(int ancestral) {
+    this->ancestral = ancestral;
+}
+
+int Vertex::getAncestral() {
+    return ancestral;
+}

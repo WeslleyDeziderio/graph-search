@@ -21,6 +21,8 @@ public:
     int getExitDepth();
     void setVertex(int);
     int getVertex();
+    void setAncestral(int);
+    int getAncestral();
 };
 
 #endif // VERTEX_HPP

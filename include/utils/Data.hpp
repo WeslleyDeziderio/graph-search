@@ -25,8 +25,8 @@ public:
     const std::list<std::list<int>>& getAdjacencyList() const;
     void printAdjacencyList();
     bool isAdjacency(int, int) const;
-    std::list<int> getNeighborhoodList(int);
-    std::vector<int> getNeighborhoodMatrix(int);
+    std::list<int> getNeighborhoodList(int) const;
+    std::vector<int> getNeighborhoodMatrix(int) const;
 };
 
 #endif // DATA_HPP

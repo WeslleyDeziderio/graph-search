@@ -99,9 +99,9 @@ bool Data::isAdjacency(int i, int j) const {
     return false;
 }
 
-std::list<int> Data::getNeighborhoodList(int vertex) {}
+std::list<int> Data::getNeighborhoodList(int vertex) const {}
 
-std::vector<int> Data::getNeighborhoodMatrix(int vertex) {
+std::vector<int> Data::getNeighborhoodMatrix(int vertex) const {
     std::vector<int> neighbors;
 
     vertex -= 1;
