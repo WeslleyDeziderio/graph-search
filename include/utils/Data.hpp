@@ -13,15 +13,18 @@ protected:
     int numVertices;
     std::string instanceName;
     std::vector<std::vector<int>> adjacencyMatrix;
-    std::list<std::list<int>> adjacencyList;
-    std::vector<std::vector<char>> coloredAdjacencyMatrix;
+    mutable std::list<std::list<int>> adjacencyList;
 public:
+    Data();
     Data(int params, char* instance);
     void readData();
     std::string getInstanceName();
+    int getNumVertices() const;
+    const std::vector<std::vector<int>>& getAdjacencyMatrix() const;
     void printAdjacencyMatrix();
-    std::list<std::list<int>> getAdjacencyList();
+    const std::list<std::list<int>>& getAdjacencyList() const;
     void printAdjacencyList();
+    bool isAdjacency(int, int) const;
 };
 
 #endif // DATA_HPP

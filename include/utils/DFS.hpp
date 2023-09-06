@@ -1,21 +1,21 @@
 #ifndef DFS_HPP
 #define DFS_HPP
 
-#define RED 'r'
-#define GREEN 'g'
-#define BLUE 'b'
-#define YELLOW 'y'
-
-#include <list>
 #include "../../include/utils/Data.hpp"
+#include "../../include/utils/Vertex.hpp"
 
-class DFS : public Data {
+class DFS {
 protected:
-    int entryDepth;
-    int exitDepth;
-    int ancestral;
+    Data dataDfs;
+    std::vector<Vertex> graphVertex;
+    int globalTimer = 0;
+    std::vector<std::vector<char>> coloredEdges;
 public:
-    DFS();
+    DFS(int params, char* instance);
+    void recursiveDFS(Vertex);
+    void setGlobalTimer(int);
+    int getGlobalTimer();
+    void incrementGlobalTimer();
 };
 
 #endif // DFS_HPP

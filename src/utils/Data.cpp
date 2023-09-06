@@ -1,9 +1,11 @@
 #include "../../include/utils/Data.hpp"
 
+Data::Data() {}
+
 Data::Data(int params, char* instance) {
     if (params != 2) {
         std::cerr << "ERROR: Missing parameters!" << std::endl;
-        std::cout << "Usage: ./concepts <Instance>" << std::endl;
+        std::cout << "Usage: ./search <Instance>" << std::endl;
         exit(1);
     }
 
@@ -37,11 +39,21 @@ std::string Data::getInstanceName() {
     return instanceName;
 }
 
+int Data::getNumVertices() const {
+    return this->numVertices;
+}
+
+const std::vector<std::vector<int>>& Data::getAdjacencyMatrix() const {
+    return adjacencyMatrix;
+}
+
 void Data::printAdjacencyMatrix() {  
     std::cout << "Adjacency Matrix: \n";
-    for (int i = 0; i < this->numVertices; ++i) {
-        for (int j = 0; j < this->numVertices; ++j) {
-            std::cout << this->adjacencyMatrix[i][j] << " ";
+    const std::vector<std::vector<int>>& matrix = getAdjacencyMatrix();
+    
+    for (const auto& row : matrix) {
+        for (int value : row) {
+            std::cout << value << " ";
         }
         std::cout << "\n";
     }
@@ -49,11 +61,11 @@ void Data::printAdjacencyMatrix() {
     std::cout << "\n";
 }
 
-std::list<std::list<int>> Data::getAdjacencyList() {
-    for (int i = 0; i < numVertices; ++i) {
+const std::list<std::list<int>>& Data::getAdjacencyList() const {
+    for (int i = 0; i < this->numVertices; ++i) {
         std::list<int> neighbors;
-        for (int j = 0; j < numVertices; ++j) {
-            if (adjacencyMatrix[i][j] == 1) {
+        for (int j = 0; j < this->numVertices; ++j) {
+            if (isAdjacency(i, j)) {
                 neighbors.push_back(j+1);
             }
         }
@@ -65,12 +77,12 @@ std::list<std::list<int>> Data::getAdjacencyList() {
 }
 
 void Data::printAdjacencyList() {
-    adjacencyList = getAdjacencyList();
-    int vertex = 0;
+    const std::list<std::list<int>>& adjacencyList = getAdjacencyList();
+    int vertex = 1;
     
     std::cout << "Adjacency List: \n";
     for (const auto& neighbors : adjacencyList) {
-        std::cout << vertex+1 << " --> ";
+        std::cout << vertex << " --> ";
         for (int neighbor : neighbors) {
             std::cout << neighbor << " ";
         }
@@ -79,6 +91,10 @@ void Data::printAdjacencyList() {
     }
 }
 
-void Data::depthFirstSearch(int vertex) {
- 
+bool Data::isAdjacency(int i, int j) const {
+    if (this->adjacencyMatrix[i][j] == 1) {
+        return true;
+    }
+
+    return false;
 }
