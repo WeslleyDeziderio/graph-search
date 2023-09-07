@@ -15,9 +15,11 @@ int main(int argc, char** argv) {
     dfs.recursiveDFS(initialVertexDfs);
     dfs.showDepths();
 
-    std::cout << "\nExecuting Breadth-First-Search" << std::endl;
-    BFS bfs(argc, argv[1]);
+    std::cout << "\n\nExecuting Breadth-First-Search" << std::endl;
+
     Vertex initialVertexBfs;
+    initialVertexBfs.setLevel(0);
+    BFS bfs(argc, argv[1]);
     initialVertexBfs.setVertex(1);
     bfs.interactiveBfs(initialVertexBfs);
     bfs.showBreadth();
@@ -25,5 +27,6 @@ int main(int argc, char** argv) {
     auto finalTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> timeTaken = finalTime-startTime;
     std::cout << "\nTime taken: " << timeTaken.count() << " ms\n" << std::endl;
+
     return 0;
 }
