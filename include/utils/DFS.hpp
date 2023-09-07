@@ -4,6 +4,9 @@
 #include "../../include/utils/Data.hpp"
 #include "../../include/utils/Vertex.hpp"
 
+#define RED 'r'
+#define BLUE 'b'
+#define ZERO_INDEX_REMOVER 1
 class DFS {
 protected:
     Data dataDfs;

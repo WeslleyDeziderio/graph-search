@@ -33,3 +33,11 @@ void Vertex::setAncestral(int ancestral) {
 int Vertex::getAncestral() {
     return ancestral;
 }
+
+void Vertex::setSearchIndex(int searchIndex) {
+    this->searchIndex = searchIndex;
+}
+
+int Vertex::getSearchIndex() {
+    return searchIndex;
+}
