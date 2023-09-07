@@ -5,6 +5,16 @@ DFS::DFS(int params, char* instance) : dataDfs(params, instance) {
     dataDfs.readData();
     dataDfs.printAdjacencyMatrix();
     dataDfs.printAdjacencyList();
+
+    this->coloredEdges.resize(this->dataDfs.getNumVertices()+1, std::vector<char>(this->dataDfs.getNumVertices()));
+    this->graphVertex.resize(this->dataDfs.getNumVertices()+1);
+    setGlobalTimer(0);
+
+    for (int i = 1; i <= dataDfs.getNumVertices(); ++i) {
+        this->graphVertex[i].setVertex(i);
+        this->graphVertex[i].setEntryDepth(0);
+        this->graphVertex[i].setAncestral(0);
+    }
 }
 
 void DFS::setGlobalTimer(int globalTimer) {
@@ -41,4 +51,19 @@ void DFS::recursiveDFS(Vertex currentVertex) {
 
     incrementGlobalTimer();
     this->graphVertex[current].setExitDepth(getGlobalTimer());
+}
+
+void DFS::showDepths() {
+    int numVertices = dataDfs.getNumVertices();
+
+    std::cout << "\nP(E) ";
+    for (int i = 1; i <= numVertices; ++i) {
+        std::cout << this->graphVertex[i].getEntryDepth() << ", ";
+    }
+
+    std::cout << "\n";
+    std::cout << "P(S) ";
+    for (int i = 1; i <= numVertices; ++i) {
+        std::cout << this->graphVertex[i].getExitDepth() << ", ";
+    }
 }

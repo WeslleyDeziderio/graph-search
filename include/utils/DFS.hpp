@@ -16,6 +16,7 @@ public:
     void setGlobalTimer(int);
     int getGlobalTimer();
     void incrementGlobalTimer();
+    void showDepths();
 };
 
 #endif // DFS_HPP
