@@ -10,6 +10,7 @@ protected:
     int exitDepth;
     int ancestral;
     int searchIndex;
+    int level;
 public:
     Vertex();
     void setEntryDepth(int);
@@ -22,6 +23,8 @@ public:
     int getAncestral();
     void setSearchIndex(int);
     int getSearchIndex();
+    void setLevel(int);
+    int getLevel();
 };
 
 #endif // VERTEX_HPP

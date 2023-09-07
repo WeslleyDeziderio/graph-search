@@ -41,3 +41,11 @@ void Vertex::setSearchIndex(int searchIndex) {
 int Vertex::getSearchIndex() {
     return searchIndex;
 }
+
+void Vertex::setLevel(int level) {
+    this->level = level;
+}
+
+int Vertex::getLevel() {
+    return level;
+}

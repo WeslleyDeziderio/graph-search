@@ -16,14 +16,15 @@ protected:
     Data dataBfs;
     int globalTimer = 0;
     std::vector<Vertex> graphVertex;
-    std::queue<int> auxQueue;
+    std::queue<Vertex> auxQueue;
     std::vector<std::vector<char>> coloredEdges;
 public:
     BFS(int, char*);
-    void interaciveBFS();
     void setGlobalTimer(int);
     int getGlobalTimer();
     void incrementGlobalTimer();
+    void interactiveBfs(Vertex);
+    void showBreadth();
 };
 
 #endif // BFS_HPP

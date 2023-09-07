@@ -10,13 +10,17 @@ int main(int argc, char** argv) {
 
     std::cout << "Executing Depth-First-Search" << std::endl;
     DFS dfs(argc, argv[1]);
-    Vertex initialVertex;
-    initialVertex.setVertex(1);
-    dfs.recursiveDFS(initialVertex);
+    Vertex initialVertexDfs;
+    initialVertexDfs.setVertex(1);
+    dfs.recursiveDFS(initialVertexDfs);
     dfs.showDepths();
 
     std::cout << "\nExecuting Breadth-First-Search" << std::endl;
     BFS bfs(argc, argv[1]);
+    Vertex initialVertexBfs;
+    initialVertexBfs.setVertex(1);
+    bfs.interactiveBfs(initialVertexBfs);
+    bfs.showBreadth();
 
     auto finalTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> timeTaken = finalTime-startTime;
