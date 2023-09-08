@@ -43,13 +43,13 @@ void BFS::interactiveBfs(Vertex vertex) {
         std::vector<int> neighborhood(dataBfs.getNeighborhoodMatrix(current.getVertex()));
 
         for (int neighbor : neighborhood) {
-            if (neighborVertex.getSearchIndex() == 0) {
+            if (this->graphVertex[neighbor].getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = BLUE;
-                neighborVertex.setAncestral(current.getVertex());   
-                neighborVertex.setLevel(current.getLevel()+1);
+                this->graphVertex[neighbor].setAncestral(current.getVertex());   
+                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
-                neighborVertex.setSearchIndex(getGlobalTimer());
-                auxQueue.push(neighborVertex);
+                this->graphVertex[neighbor].setSearchIndex(getGlobalTimer());
+                auxQueue.push(this->graphVertex[neighbor]);
             }
             else if (neighborVertex.getLevel() == current.getLevel()) {
                 if (neighborVertex.getAncestral() == current.getAncestral()) {
@@ -69,6 +69,11 @@ void BFS::showBreadth() {
     int numVertices = dataBfs.getNumVertices();
 
     std::cout << "L(v): ";
+    for (int i = 1; i <= numVertices; ++i) {
+        std::cout << this->graphVertex[i].getSearchIndex() << ", ";
+    }
+
+    std::cout << "\nLevel: ";
     for (int i = 1; i <= numVertices; ++i) {
         std::cout << this->graphVertex[i].getLevel() << ", ";
     }

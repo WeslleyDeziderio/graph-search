@@ -39,11 +39,11 @@ std::string Data::getInstanceName() {
     return instanceName;
 }
 
-int Data::getNumVertices() const {
+int Data::getNumVertices() {
     return this->numVertices;
 }
 
-const std::vector<std::vector<int>>& Data::getAdjacencyMatrix() const {
+std::vector<std::vector<int>> Data::getAdjacencyMatrix() {
     return adjacencyMatrix;
 }
 
@@ -61,11 +61,11 @@ void Data::printAdjacencyMatrix() {
     std::cout << "\n";
 }
 
-const std::list<std::list<int>>& Data::getAdjacencyList() const {
+std::list<std::list<int>> Data::getAdjacencyList() {
     for (int i = 0; i < this->numVertices; ++i) {
         std::list<int> neighbors;
         for (int j = 0; j < this->numVertices; ++j) {
-            if (isAdjacency(i, j)) {
+            if (this->adjacencyMatrix[i][j] == 1) {
                 neighbors.push_back(j+1);
             }
         }
@@ -91,20 +91,12 @@ void Data::printAdjacencyList() {
     }
 }
 
-bool Data::isAdjacency(int i, int j) const {
-    if (this->adjacencyMatrix[i][j] == 1) {
-        return true;
-    }
-
-    return false;
-}
-
-std::vector<int> Data::getNeighborhoodMatrix(int vertex) const {
+std::vector<int> Data::getNeighborhoodMatrix(int vertex) {
     std::vector<int> neighbors;
 
     vertex -= 1;
     for (int i = 0; i < this->numVertices; ++i) {
-        if (isAdjacency(vertex, i)) {
+        if (this->adjacencyMatrix[vertex][i] == 1) {
             neighbors.push_back(i+1);
         }
     }
