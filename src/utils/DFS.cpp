@@ -6,7 +6,7 @@ DFS::DFS(int params, char* instance) : dataDfs(params, instance) {
     dataDfs.printAdjacencyMatrix();
     dataDfs.printAdjacencyList();
 
-    this->coloredEdges.resize(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<char>(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER));
+    this->coloredEdges.resize(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<std::string>(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER));
     this->graphVertex.resize(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER);
     setGlobalTimer(0);
 

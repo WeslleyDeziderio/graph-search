@@ -6,7 +6,7 @@ BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     dataBfs.printAdjacencyMatrix();
     dataBfs.printAdjacencyList();
 
-    this->coloredEdges.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<char>(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER));
+    this->coloredEdges.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<std::string>(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER));
     this->graphVertex.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER);
     setGlobalTimer(0);
 
