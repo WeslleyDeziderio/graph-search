@@ -25,6 +25,7 @@ public:
     int getGlobalTimer();
     void incrementGlobalTimer();
     void interactiveBfs(Vertex);
+    void calculateEccentricity();
     void showBreadth();
 };
 

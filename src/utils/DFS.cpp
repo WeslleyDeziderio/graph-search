@@ -26,7 +26,7 @@ int DFS::getGlobalTimer() {
 }
 
 void DFS::incrementGlobalTimer() {
-    this->globalTimer += 1; 
+    this->globalTimer++; 
 }
 
 void DFS::recursiveDFS(Vertex currentVertex) {

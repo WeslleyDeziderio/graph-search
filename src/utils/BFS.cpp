@@ -27,7 +27,7 @@ int BFS::getGlobalTimer() {
 }
 
 void BFS::incrementGlobalTimer() {
-    this->globalTimer += 1;
+    this->globalTimer++;
 }
 
 void BFS::interactiveBfs(Vertex vertex) {
@@ -62,6 +62,21 @@ void BFS::interactiveBfs(Vertex vertex) {
                 this->coloredEdges[current.getVertex()][neighbor] = GREEN;
             }
          }
+    }
+}
+
+void BFS::calculateEccentricity() {
+    int numVertices = dataBfs.getNumVertices();
+
+    for (int i = 1; i <= numVertices; ++i) {
+        Vertex initialVertexBfs;
+        initialVertexBfs.setLevel(0);
+        initialVertexBfs.setAncestral(-1);
+        initialVertexBfs.setVertex(i);
+        setGlobalTimer(0);
+        std::cout << "\n\nEccentricity:" << i << std::endl;
+        interactiveBfs(this->graphVertex[i]);
+        showBreadth();
     }
 }
 
