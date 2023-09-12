@@ -9,13 +9,7 @@ BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     this->coloredEdges.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<std::string>(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER));
     this->graphVertex.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER);
     setGlobalTimer(0);
-
-    for (int i = 1; i <= dataBfs.getNumVertices(); ++i) {
-        this->graphVertex[i].setVertex(i);
-        this->graphVertex[i].setSearchIndex(0);
-        this->graphVertex[i].setAncestral(-1);
-        this->graphVertex[i].setLevel(0);
-    }
+    initializeParams();
 }
 
 void BFS::setGlobalTimer(int globalTimer) {
@@ -65,19 +59,41 @@ void BFS::interactiveBfs(Vertex vertex) {
     }
 }
 
-void BFS::calculateEccentricity() {
-    int numVertices = dataBfs.getNumVertices();
-
-    for (int i = 1; i <= numVertices; ++i) {
-        Vertex initialVertexBfs;
-        initialVertexBfs.setLevel(0);
-        initialVertexBfs.setAncestral(-1);
-        initialVertexBfs.setVertex(i);
-        setGlobalTimer(0);
-        std::cout << "\n\nEccentricity:" << i << std::endl;
-        interactiveBfs(this->graphVertex[i]);
-        showBreadth();
+void BFS::initializeParams() {
+    for (int i = 1; i <= dataBfs.getNumVertices(); ++i) {
+        this->graphVertex[i].setVertex(i);
+        this->graphVertex[i].setSearchIndex(0);
+        this->graphVertex[i].setAncestral(-1);
+        this->graphVertex[i].setLevel(0);
     }
+}
+
+void BFS::calculateMetrics() {
+        int numVertices = dataBfs.getNumVertices();
+        int ecc = 0;
+        setGlobalTimer(0);
+        std::cout << "\n\nEccentricity:" << std::endl;
+
+        for (int i = 1; i <= numVertices; ++i) {
+            initializeParams();
+            interactiveBfs(this->graphVertex[i]);
+            int eccMaxAux = 0;
+
+            for (int j = 1; j <= numVertices; ++j) {
+                if (this->graphVertex[j].getLevel() > MIN) {
+                    eccMaxAux = this->graphVertex[j].getLevel();
+                } 
+            }
+
+            if (eccMaxAux > ecc) {
+                ecc = eccMaxAux;
+            }
+
+            std::cout << "Eccentricity of vertex " << i << ": " << eccMaxAux << std::endl;
+
+        }
+
+        std::cout << "Eccentricity of the graph: " << ecc << std::endl;
 }
 
 void BFS::showBreadth() {

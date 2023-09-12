@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     initialVertexBfs.setVertex(1);
     bfs.interactiveBfs(initialVertexBfs);
     bfs.showBreadth();
-    bfs.calculateEccentricity();
+    bfs.calculateMetrics();
 
     auto finalTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> timeTaken = finalTime-startTime;

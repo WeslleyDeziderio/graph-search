@@ -12,6 +12,8 @@
 #define BLUE "'0, 0, 255'"
 #define YELLOW "'255, 255, 0'"
 #define ZERO_INDEX_REMOVER 1
+#define MAX (0x7FFFFFFF)
+#define MIN -1
 class BFS {
 protected:
     Data dataBfs;
@@ -25,7 +27,8 @@ public:
     int getGlobalTimer();
     void incrementGlobalTimer();
     void interactiveBfs(Vertex);
-    void calculateEccentricity();
+    void initializeParams();
+    void calculateMetrics();
     void showBreadth();
 };
 
