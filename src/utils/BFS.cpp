@@ -71,8 +71,11 @@ void BFS::initializeParams() {
 void BFS::calculateMetrics() {
         int numVertices = dataBfs.getNumVertices();
         int ecc = 0;
+        std::vector<int> eccVec;
         int radius = MAX;
         int diameter = 0;
+        int acumulator = 0;
+        int count = numVertices*numVertices;
         setGlobalTimer(0);
         std::cout << "\n\nEccentricity:" << std::endl;
 
@@ -82,21 +85,31 @@ void BFS::calculateMetrics() {
             int eccMaxAux = 0;
 
             for (int j = 1; j <= numVertices; ++j) {
-                if (this->graphVertex[j].getLevel() > MIN) {
+                acumulator += this->graphVertex[j].getLevel();
+
+                if (eccMaxAux < this->graphVertex[j].getLevel()) {
                     eccMaxAux = this->graphVertex[j].getLevel();
                 } 
             }
+
+            eccVec.push_back(eccMaxAux);
 
             if (eccMaxAux > ecc) {
                 ecc = eccMaxAux;
             }
 
-            if (eccMaxAux < radius) {
-                radius = eccMaxAux;
-            }
-
             std::cout << "Eccentricity of vertex " << i << ": " << eccMaxAux << std::endl;
 
+        }
+
+        for (int k = 0; k < eccVec.size(); ++k) {
+            if (eccVec[k] < radius) {
+                radius = eccVec[k];
+            }
+
+            if (eccVec[k] > diameter) {
+                diameter = eccVec[k];
+            }
         }
 
         std::cout << "Eccentricity of the graph: " << ecc << std::endl;
@@ -106,6 +119,8 @@ void BFS::calculateMetrics() {
 
         std::cout << "\n\nDiameter:" << std::endl;
         std::cout << "Diameter of the graph: " << ecc << std::endl;
+
+        std::cout << "\n\nAverage distance: " << acumulator/count << std::endl;
 }
 
 void BFS::showBreadth() {
