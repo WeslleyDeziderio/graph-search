@@ -71,6 +71,8 @@ void BFS::initializeParams() {
 void BFS::calculateMetrics() {
         int numVertices = dataBfs.getNumVertices();
         int ecc = 0;
+        int radius = MAX;
+        int diameter = 0;
         setGlobalTimer(0);
         std::cout << "\n\nEccentricity:" << std::endl;
 
@@ -89,11 +91,21 @@ void BFS::calculateMetrics() {
                 ecc = eccMaxAux;
             }
 
+            if (eccMaxAux < radius) {
+                radius = eccMaxAux;
+            }
+
             std::cout << "Eccentricity of vertex " << i << ": " << eccMaxAux << std::endl;
 
         }
 
         std::cout << "Eccentricity of the graph: " << ecc << std::endl;
+
+        std::cout << "\n\nRadius:" << std::endl;
+        std::cout << "Radius of the graph: " << radius << std::endl;
+
+        std::cout << "\n\nDiameter:" << std::endl;
+        std::cout << "Diameter of the graph: " << ecc << std::endl;
 }
 
 void BFS::showBreadth() {
