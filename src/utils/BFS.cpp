@@ -39,6 +39,7 @@ void BFS::interactiveBfs(Vertex vertex) {
         for (int neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = BLUE;
+                this->coloredEdges[neighbor][current.getVertex()] = BLUE;
                 this->graphVertex[neighbor].setAncestral(current.getVertex());   
                 this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
@@ -48,12 +49,16 @@ void BFS::interactiveBfs(Vertex vertex) {
             else if (neighborVertex.getLevel() == current.getLevel()) {
                 if (neighborVertex.getAncestral() == current.getAncestral()) {
                     this->coloredEdges[current.getVertex()][neighbor] = RED;
+                    this->coloredEdges[neighbor][current.getVertex()] = RED;
                 } else {
                     this->coloredEdges[current.getVertex()][neighbor] = YELLOW;
+                    this->coloredEdges[neighbor][current.getVertex()] = YELLOW;
                 }
             }
             else if (neighborVertex.getLevel() == current.getLevel()) {
                 this->coloredEdges[current.getVertex()][neighbor] = GREEN;
+                this->coloredEdges[neighbor][current.getVertex()] = GREEN;
+
             }
          }
     }
@@ -71,13 +76,12 @@ void BFS::initializeParams() {
 void BFS::calculateMetrics() {
         int numVertices = dataBfs.getNumVertices();
         int ecc = 0;
-        std::vector<int> eccVec;
         int radius = MAX;
-        int diameter = 0;
-        int acumulator = 0;
-        int count = numVertices*numVertices;
+        int diameter = MIN;
+        double acumulator = 0;
+        double count = numVertices*(numVertices-1);
+        std::vector<int> eccVec;
         setGlobalTimer(0);
-        std::cout << "\n\nEccentricity:" << std::endl;
 
         for (int i = 1; i <= numVertices; ++i) {
             initializeParams();
@@ -102,7 +106,7 @@ void BFS::calculateMetrics() {
 
         }
 
-        for (int k = 0; k < eccVec.size(); ++k) {
+        for (auto k : eccVec) {
             if (eccVec[k] < radius) {
                 radius = eccVec[k];
             }
@@ -112,14 +116,9 @@ void BFS::calculateMetrics() {
             }
         }
 
-        std::cout << "Eccentricity of the graph: " << ecc << std::endl;
-
-        std::cout << "\n\nRadius:" << std::endl;
+        std::cout << "\nEccentricity of the graph: " << ecc << std::endl;
         std::cout << "Radius of the graph: " << radius << std::endl;
-
-        std::cout << "\n\nDiameter:" << std::endl;
-        std::cout << "Diameter of the graph: " << ecc << std::endl;
-
+        std::cout << "Diameter of the graph: " << diameter << std::endl;
         std::cout << "\n\nAverage distance: " << acumulator/count << std::endl;
 }
 
@@ -135,4 +134,6 @@ void BFS::showBreadth() {
     for (int i = 1; i <= numVertices; ++i) {
         std::cout << this->graphVertex[i].getLevel() << ", ";
     }
+
+    std::cout << "\n\n";
 }
