@@ -25,6 +25,7 @@ public:
     std::list<std::list<int>> getAdjacencyList();
     void printAdjacencyList();
     std::vector<int> getNeighborhoodMatrix(int);
+    void writeOutputFile(std::vector<std::vector<std::string>>, std::string);
 };
 
 #endif // DATA_HPP
