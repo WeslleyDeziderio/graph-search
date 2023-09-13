@@ -41,11 +41,13 @@ void DFS::recursiveDFS(Vertex currentVertex) {
 
         if (neighborVertex.getEntryDepth() == 0) {
             this->coloredEdges[current][neighbor] = BLUE;
+            this->coloredEdges[neighbor][current] = BLUE;
             neighborVertex.setAncestral(current);
             recursiveDFS(neighborVertex);
         }
         else if (neighborVertex.getExitDepth() == 0 && neighbor != currentVertex.getAncestral()) {
             this->coloredEdges[current][neighbor] = RED;
+            this->coloredEdges[neighbor][current] = RED;
         }
     }
 
