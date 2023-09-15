@@ -5,10 +5,8 @@
 
 #include "../../include/utils/Data.hpp"
 #include "../../include/utils/Vertex.hpp"
+#include "../../include/utils/Constants.hpp"
 
-#define RED "'255, 0 , 0'"
-#define BLUE "'0, 0, 255'"
-#define ZERO_INDEX_REMOVER 1
 class DFS {
 protected:
     Data dataDfs;
@@ -21,6 +19,7 @@ public:
     void setGlobalTimer(int);
     int getGlobalTimer();
     void incrementGlobalTimer();
+    void initializeParams();
     void showDepths();
 };
 

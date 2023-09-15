@@ -6,15 +6,8 @@
 
 #include "../../include/utils/Data.hpp"
 #include "../../include/utils/Vertex.hpp"
+#include "../../include/utils/Constants.hpp"
 
-#define RED "'255, 0, 0'"
-#define GREEN "'0, 255, 0'"
-#define BLUE "'0, 0, 255'"
-#define YELLOW "'255, 255, 0'"
-#define MAX (0x7FFFFFFF)
-#define MIN -1
-
-const int ADJUST_ZERO_INDEX = 1;
 class BFS {
 protected:
     Data dataBfs;

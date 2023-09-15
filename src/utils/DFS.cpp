@@ -6,15 +6,14 @@ DFS::DFS(int params, char* instance) : dataDfs(params, instance) {
     dataDfs.printAdjacencyMatrix();
     dataDfs.printAdjacencyList();
 
-    this->coloredEdges.resize(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<std::string>(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER));
-    this->graphVertex.resize(this->dataDfs.getNumVertices()+ZERO_INDEX_REMOVER);
-    setGlobalTimer(0);
+    const int numVertices = dataDfs.getNumVertices();
+    const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
 
-    for (int i = 1; i <= dataDfs.getNumVertices(); ++i) {
-        this->graphVertex[i].setVertex(i);
-        this->graphVertex[i].setEntryDepth(0);
-        this->graphVertex[i].setAncestral(0);
-    }
+    this->coloredEdges.resize(numVertices+adjustedSize, std::vector<std::string>(numVertices+adjustedSize));
+    this->graphVertex.resize(numVertices+adjustedSize);
+
+    initializeParams();
+    setGlobalTimer(0);
 }
 
 void DFS::setGlobalTimer(int globalTimer) {
@@ -35,24 +34,32 @@ void DFS::recursiveDFS(Vertex currentVertex) {
     int current = currentVertex.getVertex();
     this->graphVertex[current].setEntryDepth(getGlobalTimer());
     
-    std::vector<int> neighborhood(dataDfs.getNeighborhoodMatrix(current));
+    std::vector<int> neighborhood = dataDfs.getNeighborhoodMatrix(current);
     for (int neighbor : neighborhood) {
         Vertex& neighborVertex = this->graphVertex[neighbor];
 
         if (neighborVertex.getEntryDepth() == 0) {
-            this->coloredEdges[current][neighbor] = BLUE;
-            this->coloredEdges[neighbor][current] = BLUE;
+            this->coloredEdges[current][neighbor] = blue;
+            this->coloredEdges[neighbor][current] = blue;
             neighborVertex.setAncestral(current);
             recursiveDFS(neighborVertex);
         }
         else if (neighborVertex.getExitDepth() == 0 && neighbor != currentVertex.getAncestral()) {
-            this->coloredEdges[current][neighbor] = RED;
-            this->coloredEdges[neighbor][current] = RED;
+            this->coloredEdges[current][neighbor] = red;
+            this->coloredEdges[neighbor][current] = red;
         }
     }
 
     incrementGlobalTimer();
     this->graphVertex[current].setExitDepth(getGlobalTimer());
+}
+
+void DFS::initializeParams() {
+  for (int i = 1; i <= dataDfs.getNumVertices(); ++i) {
+        this->graphVertex[i].setVertex(i);
+        this->graphVertex[i].setEntryDepth(0);
+        this->graphVertex[i].setAncestral(0);
+    }
 }
 
 void DFS::showDepths() {

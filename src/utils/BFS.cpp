@@ -6,8 +6,12 @@ BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     dataBfs.printAdjacencyMatrix();
     dataBfs.printAdjacencyList();
 
-    this->coloredEdges.resize(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX, std::vector<std::string>(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX));
-    this->graphVertex.resize(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX);
+    const int numVertices = dataBfs.getNumVertices();
+    const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
+
+    coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize));
+    graphVertex.resize(adjustedSize);
+    
     setGlobalTimer(0);
     initializeParams();
 }
@@ -38,8 +42,8 @@ void BFS::interactiveBfs(Vertex vertex) {
 
         for (int neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
-                this->coloredEdges[current.getVertex()][neighbor] = BLUE;
-                this->coloredEdges[neighbor][current.getVertex()] = BLUE;
+                this->coloredEdges[current.getVertex()][neighbor] = blue;
+                this->coloredEdges[neighbor][current.getVertex()] = blue;
                 this->graphVertex[neighbor].setAncestral(current.getVertex());   
                 this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
@@ -48,16 +52,16 @@ void BFS::interactiveBfs(Vertex vertex) {
             }
             else if (neighborVertex.getLevel() == current.getLevel()) {
                 if (neighborVertex.getAncestral() == current.getAncestral()) {
-                    this->coloredEdges[current.getVertex()][neighbor] = RED;
-                    this->coloredEdges[neighbor][current.getVertex()] = RED;
+                    this->coloredEdges[current.getVertex()][neighbor] = red;
+                    this->coloredEdges[neighbor][current.getVertex()] = red;
                 } else {
-                    this->coloredEdges[current.getVertex()][neighbor] = YELLOW;
-                    this->coloredEdges[neighbor][current.getVertex()] = YELLOW;
+                    this->coloredEdges[current.getVertex()][neighbor] = yellow;
+                    this->coloredEdges[neighbor][current.getVertex()] = yellow;
                 }
             }
             else if (neighborVertex.getLevel() == current.getLevel()) {
-                this->coloredEdges[current.getVertex()][neighbor] = GREEN;
-                this->coloredEdges[neighbor][current.getVertex()] = GREEN;
+                this->coloredEdges[current.getVertex()][neighbor] = green;
+                this->coloredEdges[neighbor][current.getVertex()] = green;
 
             }
          }
