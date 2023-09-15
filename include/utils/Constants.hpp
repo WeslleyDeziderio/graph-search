@@ -3,10 +3,10 @@
 
 #include <string>
 
-const std::string red = "'255, 0, 0'";
-const std::string green = "'0, 255, 0'";
-const std::string blue = "'0, 0, 255'";
-const std::string yellow = "'255, 255, 0'";
+const std::string red = "'255,0,0'";
+const std::string green = "'0,255,0'";
+const std::string blue = "'0,0,255'";
+const std::string yellow = "'255,255,0'";
 
 const int MAX = (0x7FFFFFFF);
 const int MIN = -1;
