@@ -6,8 +6,8 @@ BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     dataBfs.printAdjacencyMatrix();
     dataBfs.printAdjacencyList();
 
-    this->coloredEdges.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER, std::vector<std::string>(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER));
-    this->graphVertex.resize(this->dataBfs.getNumVertices()+ZERO_INDEX_REMOVER);
+    this->coloredEdges.resize(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX, std::vector<std::string>(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX));
+    this->graphVertex.resize(this->dataBfs.getNumVertices()+ADJUST_ZERO_INDEX);
     setGlobalTimer(0);
     initializeParams();
 }
@@ -25,16 +25,16 @@ void BFS::incrementGlobalTimer() {
 }
 
 void BFS::interactiveBfs(Vertex vertex) {
-    auxQueue.push(vertex);
+    auxQueue.push_back(vertex);
     incrementGlobalTimer();
     this->graphVertex[vertex.getVertex()].setSearchIndex(getGlobalTimer());
 
     while (!auxQueue.empty()) {
-        Vertex current = auxQueue.front();
+        Vertex& current = auxQueue.front();
         Vertex& neighborVertex = this->graphVertex[current.getVertex()];
-        auxQueue.pop();
+        auxQueue.pop_front();
         int currentIndex = vertex.getSearchIndex();
-        std::vector<int> neighborhood(dataBfs.getNeighborhoodMatrix(current.getVertex()));
+        std::vector<int> neighborhood = dataBfs.getNeighborhoodMatrix(current.getVertex());
 
         for (int neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
@@ -44,7 +44,7 @@ void BFS::interactiveBfs(Vertex vertex) {
                 this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
                 this->graphVertex[neighbor].setSearchIndex(getGlobalTimer());
-                auxQueue.push(this->graphVertex[neighbor]);
+                auxQueue.push_back(this->graphVertex[neighbor]);
             }
             else if (neighborVertex.getLevel() == current.getLevel()) {
                 if (neighborVertex.getAncestral() == current.getAncestral()) {
@@ -81,6 +81,7 @@ void BFS::calculateMetrics() {
         double acumulator = 0;
         double count = numVertices*(numVertices-1);
         std::vector<int> eccVec;
+
         setGlobalTimer(0);
 
         for (int i = 1; i <= numVertices; ++i) {

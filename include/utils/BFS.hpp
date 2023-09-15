@@ -1,7 +1,7 @@
 #ifndef BFS_HPP
 #define BFS_HPP
 
-#include <queue>
+#include <deque>
 #include <string>
 
 #include "../../include/utils/Data.hpp"
@@ -11,15 +11,16 @@
 #define GREEN "'0, 255, 0'"
 #define BLUE "'0, 0, 255'"
 #define YELLOW "'255, 255, 0'"
-#define ZERO_INDEX_REMOVER 1
 #define MAX (0x7FFFFFFF)
 #define MIN -1
+
+const int ADJUST_ZERO_INDEX = 1;
 class BFS {
 protected:
     Data dataBfs;
     int globalTimer = 0;
     std::vector<Vertex> graphVertex;
-    std::queue<Vertex> auxQueue;
+    std::deque<Vertex> auxQueue;
     std::vector<std::vector<std::string>> coloredEdges;
 public:
     BFS(int, char*);
