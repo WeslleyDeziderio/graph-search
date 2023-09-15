@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     BFS bfs(argc, argv[1]);
     initialVertexBfs.setVertex(1);
     bfs.interactiveBfs(initialVertexBfs);
-    bfs.showBreadth();
+    bfs.showLevelSearchIndex();
     bfs.calculateMetrics();
 
     auto finalTime = std::chrono::high_resolution_clock::now();

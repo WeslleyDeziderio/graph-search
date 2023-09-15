@@ -82,7 +82,7 @@ void BFS::calculateMetrics() {
         int ecc = 0;
         int radius = MAX;
         int diameter = MIN;
-        double acumulator = 0;
+        double accumulator = 0;
         double count = numVertices*(numVertices-1);
         std::vector<int> eccVec;
 
@@ -94,7 +94,7 @@ void BFS::calculateMetrics() {
             int eccMaxAux = 0;
 
             for (int j = 1; j <= numVertices; ++j) {
-                acumulator += this->graphVertex[j].getLevel();
+                accumulator += this->graphVertex[j].getLevel();
 
                 if (eccMaxAux < this->graphVertex[j].getLevel()) {
                     eccMaxAux = this->graphVertex[j].getLevel();
@@ -124,10 +124,10 @@ void BFS::calculateMetrics() {
         std::cout << "\nEccentricity of the graph: " << ecc << std::endl;
         std::cout << "Radius of the graph: " << radius << std::endl;
         std::cout << "Diameter of the graph: " << diameter << std::endl;
-        std::cout << "\n\nAverage distance: " << acumulator/count << std::endl;
+        std::cout << "\n\nAverage distance: " << accumulator/count << std::endl;
 }
 
-void BFS::showBreadth() {
+void BFS::showLevelSearchIndex() {
     int numVertices = dataBfs.getNumVertices();
 
     std::cout << "L(v): ";

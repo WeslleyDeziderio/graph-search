@@ -23,7 +23,7 @@ public:
     void interactiveBfs(Vertex);
     void initializeParams();
     void calculateMetrics();
-    void showBreadth();
+    void showLevelSearchIndex();
 };
 
 #endif // BFS_HPP
