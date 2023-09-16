@@ -9,7 +9,7 @@ BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     const int numVertices = dataBfs.getNumVertices();
     const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
 
-    coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize));
+    coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize, null));
     graphVertex.resize(adjustedSize);
     
     setGlobalTimer(0);
@@ -40,7 +40,7 @@ void BFS::interactiveBfs(Vertex vertex) {
         int currentIndex = vertex.getSearchIndex();
         std::vector<int> neighborhood = dataBfs.getNeighborhoodMatrix(current.getVertex());
 
-        for (int neighbor : neighborhood) {
+        for (auto neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = blue;
                 this->coloredEdges[neighbor][current.getVertex()] = blue;
@@ -141,4 +141,38 @@ void BFS::showLevelSearchIndex() {
     }
 
     std::cout << "\n\n";
+}
+
+void BFS::generateOutputFile() {
+    std::string path = "instances/myOutput/graph_bfs.gdf";
+    std::ofstream file(path);
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open the output file." << std::endl;
+        return;
+    }
+
+    file << "nodedef>name VARCHAR,label VARCHAR" << std::endl;
+
+    for (int i = 1; i <= dataBfs.getNumVertices(); ++i) {
+        file << i << "," << i << std::endl;
+    }
+
+    file << "edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR" << std::endl;
+
+    for (int i = 0; i < this->coloredEdges.size(); ++i) {
+        for (int j = i; j < this->coloredEdges[i].size(); ++j) {
+            if (this->coloredEdges[i][j].length() > 0) {
+                file << i << "," << j << ",false," << this->coloredEdges[i][j] << std::endl;
+            }
+        }
+    }
+
+    file.close();
+
+     if (file.fail()) {
+        std::cerr << "Error: Failed to write data to the output file." << std::endl;
+    } else {
+        std::cout << "\nFile generated successfully: " << path << std::endl;
+    }
 }

@@ -21,6 +21,7 @@ public:
     void incrementGlobalTimer();
     void initializeParams();
     void showDepths();
+    void generateOutputFile();
 };
 
 #endif // DFS_HPP
