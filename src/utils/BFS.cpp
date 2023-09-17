@@ -27,10 +27,10 @@ void BFS::incrementGlobalTimer() {
 }
 
 void BFS::interactiveBfs(Vertex vertex) {
-    auxQueue.push_back(vertex);
     incrementGlobalTimer();
     this->graphVertex[vertex.getVertex()].setSearchIndex(getGlobalTimer());
     this->graphVertex[vertex.getVertex()].setLevel(0);
+    auxQueue.push_back(this->graphVertex[vertex.getVertex()]);
 
     while (!auxQueue.empty()) {
         Vertex& current = auxQueue.front();
