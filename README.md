@@ -1,7 +1,12 @@
-<h2>Project 2 - Graph Search</h2>
+<h2 align="center">Project 2 - Graph Search</h2>
+
+<p align="center">
 
 [![author](https://img.shields.io/badge/author-WeslleyDeziderio-blue.svg)](https://github.com/WeslleyDeziderio)
 [![](https://img.shields.io/badge/C++-navy.svg)](https://en.cppreference.com/w/cpp/23)
+
+</p>
+
 
 <div>
 
