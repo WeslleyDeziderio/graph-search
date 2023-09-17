@@ -103,28 +103,3 @@ std::vector<int> Data::getNeighborhoodMatrix(int vertex) {
 
     return neighbors;
 }
-
-// void Data::writeOutputFile(std::vector<std::vector<std::string>> coloredEdges, std::string file) {
-//     std::string aux = ("instances/my-out/");
-//     aux += (file + ".gdf");
-//     std::ofstream out;
-//     out.open(aux, std::ofstream::trunc);
-
-//     out << "nodef>name VARCHAR,label VARCHAR" << std::endl;
-
-//     for (int i = 1; i <= getNumVertices(); ++i) {
-//         out << i << "," << i << std::endl;
-//     }
-
-//     out << "edgedef>node1 VARCHAR,node2 VARCHAR, directed BOOLEAN, color VARCHAR" << std::endl;
-
-//     for (int i = 0; i < coloredEdges.size(); ++i) {
-//         for (int j = i; j < coloredEdges[i].size(); ++j) {
-//             if (coloredEdges[i][j].length() > 0) {
-//                 out << i << "," << j << ",false," << coloredEdges[i][j] << std::endl;
-//             }
-//         }
-//     }
-
-//     out.close();
-// }
