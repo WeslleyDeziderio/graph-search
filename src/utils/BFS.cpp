@@ -103,17 +103,17 @@ void BFS::calculateMetrics() {
                 ecc = eccMaxAux;
             }
 
-            std::cout << "Eccentricity of vertex " << i << ": " << eccMaxAux << std::endl;
+            // std::cout << "Eccentricity of vertex  " << i << ": " << eccMaxAux << std::endl;
 
         }
 
         for (auto k : eccVec) {
-            if (eccVec[k] < radius) {
-                radius = eccVec[k];
+            if (k < radius) {
+                radius = k;
             }
 
-            if (eccVec[k] > diameter) {
-                diameter = eccVec[k];
+            if (k > diameter) {
+                diameter = k;
             }
         }
 
