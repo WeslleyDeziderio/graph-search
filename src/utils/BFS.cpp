@@ -38,17 +38,20 @@ void BFS::interactiveBfs(Vertex vertex) {
         std::vector<int> neighborhood = dataBfs.getNeighborhoodMatrix(current.getVertex());
 
         for (auto neighbor : neighborhood) {
-            if (this->graphVertex[neighbor].getSearchIndex() == 0) {
+            Vertex& neighborVertex = this->graphVertex[neighbor];
+
+            if (neighborVertex.getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = blue;
                 this->coloredEdges[neighbor][current.getVertex()] = blue;
                 incrementGlobalTimer();
-                this->graphVertex[neighbor].setAncestral(current.getVertex());   
-                this->graphVertex[neighbor].setSearchIndex(getGlobalTimer());
-                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
-                auxQueue.push_back(this->graphVertex[neighbor]);
+
+                neighborVertex.setAncestral(current.getVertex());   
+                neighborVertex.setSearchIndex(getGlobalTimer());
+                neighborVertex.setLevel(current.getLevel()+1);
+                auxQueue.push_back(neighborVertex);
             }
-            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()) {
-                if (this->graphVertex[neighbor].getAncestral() == current.getAncestral()) {
+            else if (neighborVertex.getLevel() == current.getLevel()) {
+                if (neighborVertex.getAncestral() == current.getAncestral()) {
                     this->coloredEdges[current.getVertex()][neighbor] = red;
                     this->coloredEdges[neighbor][current.getVertex()] = red;
                 } else {
@@ -56,7 +59,7 @@ void BFS::interactiveBfs(Vertex vertex) {
                     this->coloredEdges[neighbor][current.getVertex()] = yellow;
                 }
             }
-            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()+1) {
+            else if (neighborVertex.getLevel() == current.getLevel()+1) {
                 this->coloredEdges[current.getVertex()][neighbor] = green;
                 this->coloredEdges[neighbor][current.getVertex()] = green;
 
