@@ -23,9 +23,9 @@ int main(int argc, char** argv) {
     BFS bfs(argc, argv[1]);
     initialVertexBfs.setVertex(1);
     bfs.interactiveBfs(initialVertexBfs);
+    bfs.generateOutputFile();
     bfs.showLevelSearchIndex();
     bfs.calculateMetrics();
-    bfs.generateOutputFile();
 
     auto finalTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> timeTaken = finalTime-startTime;

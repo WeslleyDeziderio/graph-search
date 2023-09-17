@@ -3,14 +3,12 @@
 BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     std::cout << "Reading " << dataBfs.getInstanceName() << std::endl;
     dataBfs.readData();
-    dataBfs.printAdjacencyMatrix();
-    dataBfs.printAdjacencyList();
 
     const int numVertices = dataBfs.getNumVertices();
-    const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
+    const int adjustedSize = numVertices+ADJUST_ZERO_INDEX;
 
-    coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize, null));
-    graphVertex.resize(adjustedSize);
+    this->coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize, null));
+    this->graphVertex.resize(adjustedSize);
     
     setGlobalTimer(0);
     initializeParams();
@@ -32,26 +30,25 @@ void BFS::interactiveBfs(Vertex vertex) {
     auxQueue.push_back(vertex);
     incrementGlobalTimer();
     this->graphVertex[vertex.getVertex()].setSearchIndex(getGlobalTimer());
+    this->graphVertex[vertex.getVertex()].setLevel(0);
 
     while (!auxQueue.empty()) {
         Vertex& current = auxQueue.front();
-        Vertex& neighborVertex = this->graphVertex[current.getVertex()];
         auxQueue.pop_front();
-        int currentIndex = vertex.getSearchIndex();
         std::vector<int> neighborhood = dataBfs.getNeighborhoodMatrix(current.getVertex());
 
         for (auto neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = blue;
                 this->coloredEdges[neighbor][current.getVertex()] = blue;
-                this->graphVertex[neighbor].setAncestral(current.getVertex());   
-                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
+                this->graphVertex[neighbor].setAncestral(current.getVertex());   
                 this->graphVertex[neighbor].setSearchIndex(getGlobalTimer());
+                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 auxQueue.push_back(this->graphVertex[neighbor]);
             }
-            else if (neighborVertex.getLevel() == current.getLevel()) {
-                if (neighborVertex.getAncestral() == current.getAncestral()) {
+            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()) {
+                if (this->graphVertex[neighbor].getAncestral() == current.getAncestral()) {
                     this->coloredEdges[current.getVertex()][neighbor] = red;
                     this->coloredEdges[neighbor][current.getVertex()] = red;
                 } else {
@@ -59,7 +56,7 @@ void BFS::interactiveBfs(Vertex vertex) {
                     this->coloredEdges[neighbor][current.getVertex()] = yellow;
                 }
             }
-            else if (neighborVertex.getLevel() == current.getLevel()) {
+            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()+1) {
                 this->coloredEdges[current.getVertex()][neighbor] = green;
                 this->coloredEdges[neighbor][current.getVertex()] = green;
 
@@ -73,7 +70,7 @@ void BFS::initializeParams() {
         this->graphVertex[i].setVertex(i);
         this->graphVertex[i].setSearchIndex(0);
         this->graphVertex[i].setAncestral(-1);
-        this->graphVertex[i].setLevel(0);
+        this->graphVertex[i].setLevel(-1);
     }
 }
 
@@ -86,9 +83,8 @@ void BFS::calculateMetrics() {
         double count = numVertices*(numVertices-1);
         std::vector<int> eccVec;
 
-        setGlobalTimer(0);
-
         for (int i = 1; i <= numVertices; ++i) {
+            setGlobalTimer(0);
             initializeParams();
             interactiveBfs(this->graphVertex[i]);
             int eccMaxAux = 0;
@@ -145,7 +141,7 @@ void BFS::showLevelSearchIndex() {
 
 void BFS::generateOutputFile() {
     std::string path = "instances/myOutput/graph_bfs.gdf";
-    std::ofstream file(path);
+    std::ofstream file(path, std::ofstream::trunc);
 
     if (!file.is_open()) {
         std::cerr << "Error: Unable to open the output file." << std::endl;

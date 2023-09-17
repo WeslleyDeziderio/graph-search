@@ -3,14 +3,12 @@
 DFS::DFS(int params, char* instance) : dataDfs(params, instance) {
     std::cout << "Reading " << dataDfs.getInstanceName() << std::endl;
     dataDfs.readData();
-    dataDfs.printAdjacencyMatrix();
-    dataDfs.printAdjacencyList();
 
     const int numVertices = dataDfs.getNumVertices();
-    const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
+    const int adjustedSize = numVertices+ADJUST_ZERO_INDEX;
 
-    this->coloredEdges.resize(numVertices+adjustedSize, std::vector<std::string>(numVertices+adjustedSize, null));
-    this->graphVertex.resize(numVertices+adjustedSize);
+    this->coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize, null));
+    this->graphVertex.resize(adjustedSize);
 
     setGlobalTimer(0);
     initializeParams();
@@ -58,6 +56,7 @@ void DFS::initializeParams() {
   for (int i = 1; i <= dataDfs.getNumVertices(); ++i) {
         this->graphVertex[i].setVertex(i);
         this->graphVertex[i].setEntryDepth(0);
+        this->graphVertex[i].setExitDepth(0);
         this->graphVertex[i].setAncestral(-1);
     }
 }
