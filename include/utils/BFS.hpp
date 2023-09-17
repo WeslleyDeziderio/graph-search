@@ -24,6 +24,7 @@ public:
     void initializeParams();
     void calculateMetrics();
     void showLevelSearchIndex();
+    void generateOutputFile();
 };
 
 #endif // BFS_HPP

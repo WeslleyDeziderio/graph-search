@@ -1,4 +1,4 @@
-PROJ_NAME=search
+PROJ_NAME=graph-search
 
 #.hpp files
 HPP_SOURCE=$(wildcard ./include/*.hpp ./include/utils/*.hpp)

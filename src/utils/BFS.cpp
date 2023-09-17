@@ -3,14 +3,12 @@
 BFS::BFS(int params, char* instance) : dataBfs(params, instance) {
     std::cout << "Reading " << dataBfs.getInstanceName() << std::endl;
     dataBfs.readData();
-    dataBfs.printAdjacencyMatrix();
-    dataBfs.printAdjacencyList();
 
     const int numVertices = dataBfs.getNumVertices();
-    const int adjustedSize = numVertices + ADJUST_ZERO_INDEX;
+    const int adjustedSize = numVertices+ADJUST_ZERO_INDEX;
 
-    coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize));
-    graphVertex.resize(adjustedSize);
+    this->coloredEdges.resize(adjustedSize, std::vector<std::string>(adjustedSize, null));
+    this->graphVertex.resize(adjustedSize);
     
     setGlobalTimer(0);
     initializeParams();
@@ -29,29 +27,28 @@ void BFS::incrementGlobalTimer() {
 }
 
 void BFS::interactiveBfs(Vertex vertex) {
-    auxQueue.push_back(vertex);
     incrementGlobalTimer();
     this->graphVertex[vertex.getVertex()].setSearchIndex(getGlobalTimer());
+    this->graphVertex[vertex.getVertex()].setLevel(0);
+    auxQueue.push_back(this->graphVertex[vertex.getVertex()]);
 
     while (!auxQueue.empty()) {
         Vertex& current = auxQueue.front();
-        Vertex& neighborVertex = this->graphVertex[current.getVertex()];
         auxQueue.pop_front();
-        int currentIndex = vertex.getSearchIndex();
         std::vector<int> neighborhood = dataBfs.getNeighborhoodMatrix(current.getVertex());
 
-        for (int neighbor : neighborhood) {
+        for (auto neighbor : neighborhood) {
             if (this->graphVertex[neighbor].getSearchIndex() == 0) {
                 this->coloredEdges[current.getVertex()][neighbor] = blue;
                 this->coloredEdges[neighbor][current.getVertex()] = blue;
-                this->graphVertex[neighbor].setAncestral(current.getVertex());   
-                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 incrementGlobalTimer();
+                this->graphVertex[neighbor].setAncestral(current.getVertex());   
                 this->graphVertex[neighbor].setSearchIndex(getGlobalTimer());
+                this->graphVertex[neighbor].setLevel(current.getLevel()+1);
                 auxQueue.push_back(this->graphVertex[neighbor]);
             }
-            else if (neighborVertex.getLevel() == current.getLevel()) {
-                if (neighborVertex.getAncestral() == current.getAncestral()) {
+            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()) {
+                if (this->graphVertex[neighbor].getAncestral() == current.getAncestral()) {
                     this->coloredEdges[current.getVertex()][neighbor] = red;
                     this->coloredEdges[neighbor][current.getVertex()] = red;
                 } else {
@@ -59,7 +56,7 @@ void BFS::interactiveBfs(Vertex vertex) {
                     this->coloredEdges[neighbor][current.getVertex()] = yellow;
                 }
             }
-            else if (neighborVertex.getLevel() == current.getLevel()) {
+            else if (this->graphVertex[neighbor].getLevel() == current.getLevel()+1) {
                 this->coloredEdges[current.getVertex()][neighbor] = green;
                 this->coloredEdges[neighbor][current.getVertex()] = green;
 
@@ -73,7 +70,7 @@ void BFS::initializeParams() {
         this->graphVertex[i].setVertex(i);
         this->graphVertex[i].setSearchIndex(0);
         this->graphVertex[i].setAncestral(-1);
-        this->graphVertex[i].setLevel(0);
+        this->graphVertex[i].setLevel(-1);
     }
 }
 
@@ -86,9 +83,8 @@ void BFS::calculateMetrics() {
         double count = numVertices*(numVertices-1);
         std::vector<int> eccVec;
 
-        setGlobalTimer(0);
-
         for (int i = 1; i <= numVertices; ++i) {
+            setGlobalTimer(0);
             initializeParams();
             interactiveBfs(this->graphVertex[i]);
             int eccMaxAux = 0;
@@ -107,17 +103,17 @@ void BFS::calculateMetrics() {
                 ecc = eccMaxAux;
             }
 
-            std::cout << "Eccentricity of vertex " << i << ": " << eccMaxAux << std::endl;
+            // std::cout << "Eccentricity of vertex  " << i << ": " << eccMaxAux << std::endl;
 
         }
 
         for (auto k : eccVec) {
-            if (eccVec[k] < radius) {
-                radius = eccVec[k];
+            if (k < radius) {
+                radius = k;
             }
 
-            if (eccVec[k] > diameter) {
-                diameter = eccVec[k];
+            if (k > diameter) {
+                diameter = k;
             }
         }
 
@@ -141,4 +137,38 @@ void BFS::showLevelSearchIndex() {
     }
 
     std::cout << "\n\n";
+}
+
+void BFS::generateOutputFile() {
+    std::string path = "instances/myOutput/graph_bfs.gdf";
+    std::ofstream file(path, std::ofstream::trunc);
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open the output file." << std::endl;
+        return;
+    }
+
+    file << "nodedef>name VARCHAR,label VARCHAR" << std::endl;
+
+    for (int i = 1; i <= dataBfs.getNumVertices(); ++i) {
+        file << i << "," << i << std::endl;
+    }
+
+    file << "edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR" << std::endl;
+
+    for (int i = 0; i < this->coloredEdges.size(); ++i) {
+        for (int j = i; j < this->coloredEdges[i].size(); ++j) {
+            if (this->coloredEdges[i][j].length() > 0) {
+                file << i << "," << j << ",false," << this->coloredEdges[i][j] << std::endl;
+            }
+        }
+    }
+
+    file.close();
+
+     if (file.fail()) {
+        std::cerr << "Error: Failed to write data to the output file." << std::endl;
+    } else {
+        std::cout << "\nFile generated successfully: " << path << std::endl;
+    }
 }

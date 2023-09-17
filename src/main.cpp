@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     initialVertexDfs.setVertex(1);
     dfs.recursiveDFS(initialVertexDfs);
     dfs.showDepths();
+    dfs.generateOutputFile();
 
     std::cout << "\n\nExecuting Breadth-First-Search" << std::endl;
 
@@ -22,6 +23,7 @@ int main(int argc, char** argv) {
     BFS bfs(argc, argv[1]);
     initialVertexBfs.setVertex(1);
     bfs.interactiveBfs(initialVertexBfs);
+    bfs.generateOutputFile();
     bfs.showLevelSearchIndex();
     bfs.calculateMetrics();
 
