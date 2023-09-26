@@ -33,7 +33,7 @@ void DFS::recursiveDFS(Vertex currentVertex) {
     this->graphVertex[current].setEntryDepth(getGlobalTimer());
     
     std::vector<int> neighborhood = dataDfs.getNeighborhoodMatrix(current);
-    for (int neighbor : neighborhood) {
+    for (auto neighbor : neighborhood) {
         Vertex& neighborVertex = this->graphVertex[neighbor];
 
         if (neighborVertex.getEntryDepth() == 0) {
