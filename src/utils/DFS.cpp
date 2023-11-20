@@ -29,22 +29,22 @@ void DFS::incrementGlobalTimer() {
 void DFS::recursiveDFS(Vertex currentVertex) {
     incrementGlobalTimer();
 
-    int current = currentVertex.getVertex();
+    auto current = currentVertex.getVertex();
     this->graphVertex[current].setEntryDepth(getGlobalTimer());
     
     std::vector<int> neighborhood = dataDfs.getNeighborhoodMatrix(current);
-    for (auto neighbor : neighborhood) {
-        Vertex& neighborVertex = this->graphVertex[neighbor];
+    for (auto vertex : neighborhood) {
+        Vertex& neighborVertex = this->graphVertex[vertex];
 
         if (neighborVertex.getEntryDepth() == 0) {
-            this->coloredEdges[current][neighbor] = blue;
-            this->coloredEdges[neighbor][current] = blue;
+            this->coloredEdges[current][vertex] = blue;
+            this->coloredEdges[vertex][current] = blue;
             neighborVertex.setAncestral(current);
             recursiveDFS(neighborVertex);
         }
-        else if (neighborVertex.getExitDepth() == 0 && neighbor != currentVertex.getAncestral()) {
-            this->coloredEdges[current][neighbor] = red;
-            this->coloredEdges[neighbor][current] = red;
+        else if (neighborVertex.getExitDepth() == 0 && vertex != currentVertex.getAncestral()) {
+            this->coloredEdges[current][vertex] = red;
+            this->coloredEdges[vertex][current] = red;
         }
     }
 
@@ -62,7 +62,7 @@ void DFS::initializeParams() {
 }
 
 void DFS::showDepths() {
-    int numVertices = dataDfs.getNumVertices();
+    auto numVertices = dataDfs.getNumVertices();
 
     std::cout << "\nP(E): ";
     for (int i = 1; i <= numVertices; ++i) {
