@@ -2,15 +2,17 @@
 
 <p align="center">
 
-[![author](https://img.shields.io/badge/author-WeslleyDeziderio-blue.svg)](https://github.com/WeslleyDeziderio)
-[![](https://img.shields.io/badge/C++-navy.svg)](https://en.cppreference.com/w/cpp/23)
+[![author](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WeslleyDeziderio)
+[![](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)](https://en.cppreference.com/w/cpp/23)
 
 </p>
 
 
 <div>
 
-**Description**: In this project, you should implement, in any programming language, the
+## Description
+
+In this project, you should implement, in any programming language, the
 depth-first and breadth-first search algorithms. The program will read a undirected graph, simple and connected, which will be informed through a text file with a format
 similar to the file from [project 1](https://github.com/WeslleyDeziderio/applied-graph-theory). For the graph illustrated in Figure 1a, for example, the file from
 entry would be as follows
@@ -35,3 +37,8 @@ radius and diameter of G (look up the definitions of these metrics), as well as 
 to validate the implementation.
 
 </div>
+
+## Running
+
+On the root directory run `make` to compile the program.
+You can run an instance using `./graph-search instances/in/<desired_instance>`
